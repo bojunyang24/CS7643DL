@@ -1,0 +1,188 @@
+\documentclass[11pt,english]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Package imports are stored in /assets/base-packages.tex
+% Packages specific to this pset can be imported here.
+
+\listfiles
+\input{CS7643-Problem-Sets/assets/base-packages.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Shortcuts
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{CS7643-Problem-Sets/assets/mysymbols}
+\usepackage{float}
+\input{CS7643-Problem-Sets/assets/math_definition.tex}
+\renewcommand{\hide}[1]{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title / Author
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\title{CS4803-7643: Deep Learning\\
+Spring 2022 \\
+Problem Set 3}
+
+% NOTE: Any changes to instructor, TAs, or piazza link should be done in the file below
+\input{CS7643-Problem-Sets/assets/instructor-and-TAs}
+\date{Due: Monday, March 14, 11:59pm EST}
+\maketitle
+
+
+\paragraph*{Instructions}
+\begin{enumerate}
+\item We will be using Gradescope to collect your assignments.  Please read the following instructions for submitting to Gradescope carefully!
+     \begin{itemize}
+          \item
+                For the HW3 component on Gradescope, you could upload one single PDF containing the answers to all the theory questions, the report for the coding problems and the jupyter notebook \textit{root/test\_style\_transfer.ipynb} consisting of tests for parts of the style transfer implementation . However, the solution to each problem/subproblem must be on a separate page. When submitting to Gradescope, please make sure to mark the page(s) corresponding to each problem/sub-problem. Also, please make sure that your submission for the coding part only includes the files collected by the collect\_submission script, else the auto-grader will result in a zero, and we won't accept regrade requests for this scenario given the size of the class. Likewise, the pages of the report must also be marked to their corresponding subproblems
+
+          \item
+               For the coding problem,
+               please use the provided \texttt{collect\_submission.py} script and upload the resulting zip file to the HW3 Code assignment on Gradescope. Only Style Transfer will be graded by the autograder.
+               %While we will not be explicitly grading your code, you are still required to submit it.
+               Please make sure you have saved the most recent version of your code before running this script.
+
+          \item
+               Note: This is a large class and Gradescope's assignment segmentation features are essential.
+               Failure to follow these instructions may result in parts of your assignment not being graded.
+               We will not entertain regrading requests for failure to follow instructions.
+
+
+               Please check \href{https://gradescope-static-assets.s3-us-west-2.amazonaws.com/help/submitting_hw_guide.pdf}{this} link for additional information on submitting to Gradescope.
+     \end{itemize}
+
+\item
+     \LaTeX'd  solutions are strongly encouraged (solutions template is
+     provided in the starter zip file)
+     but scanned handwritten copies are acceptable.
+     Hard copies are \textbf{not} accepted.
+
+
+\item We generally encourage you to collaborate with other students.
+
+You may talk to a friend,
+discuss the questions and potential directions for solving them. However, you need to write
+your own solutions and code separately, and \emph{not} as a group activity.
+Please list the students you collaborated with. \\ \\
+\end{enumerate}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Body
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Collaborators [0.5 points]}
+
+\input{CS7643-Problem-Sets/question-bank/Misc/collaborators}
+
+\section{Convolution Basics}
+\begin{enumerate}[start]
+
+\item
+\textbf{[0.5 points]}
+\input{CS7643-Problem-Sets/question-bank/Convolutions/conv_is_affine}
+
+\item 
+\textbf{[0.5 points]}
+\input{CS7643-Problem-Sets/question-bank/Convolutions/transpose_conv_is_affine}
+
+\item 
+\textbf{[1 point]}
+\input{CS7643-Problem-Sets/question-bank/Convolutions/conv_transpose-conv_equality}
+
+\end{enumerate}
+
+
+\section{Logic and XOR}
+\begin{enumerate}[resume]
+
+\item
+\textbf{[1 point]}
+\input{CS7643-Problem-Sets/question-bank/RNNs/AND_OR_functions}
+
+\item
+\textbf{[1 point]}
+\input{CS7643-Problem-Sets/question-bank/RNNs/XOR_function}
+
+\end{enumerate}
+
+\section{Piece-wise Linearity}
+
+\begin{enumerate}[resume]
+
+\item 
+\textbf{[3 points]}
+\input{CS7643-Problem-Sets/question-bank/RNNs/ReLU_piece-wise_linear}
+    
+\end{enumerate}
+
+
+\section{Depth - Composing Linear Pieces}
+
+\begin{enumerate}[resume]
+
+\item 
+\textbf{[3 points]}
+\input{CS7643-Problem-Sets/question-bank/Theory/depth-composing1}
+
+\item
+\textbf{[2 points]}
+\input{CS7643-Problem-Sets/question-bank/Theory/depth-composing2}
+
+\item
+\textbf{[4 points]}
+\input{CS7643-Problem-Sets/question-bank/Theory/depth-composing3}
+
+\end{enumerate}
+
+\section*{Conclusion to the above questions}
+
+%\item
+\input{CS7643-Problem-Sets/question-bank/Theory/depth-composing-conclusion}
+    
+    
+
+\section{Implicit Regularization of Gradient descent [Extra Credit for both 4803 and 7643, 6 points]}
+
+\begin{enumerate}[resume]
+
+\item
+\textbf{[4 points]}
+\input{CS7643-Problem-Sets/question-bank/Theory/implicit-regularization1}
+
+\item
+\textbf{[1 point]}
+\input{CS7643-Problem-Sets/question-bank/Theory/implicit-regularization2}
+
+\item
+\textbf{[1 point]}
+\input{CS7643-Problem-Sets/question-bank/Theory/implicit-regularization3}
+    
+\end{enumerate}
+
+
+\section{Receptive Fields [Extra Credit for both 4803 and 7643, 3 points]}
+\begin{enumerate}[resume]
+\item 
+\input{CS7643-Problem-Sets/question-bank/Convolutions/receptive_field}
+\end{enumerate}
+
+\section{Paper Review [Extra credit for 4803, regular credit for 7643]}
+
+% Point values stored inside deep-double-descent file
+\input{CS7643-Problem-Sets/question-bank/Paper_Reviews/deep-double-descent}
+
+\section{Coding: Uses of Gradients With Respect to Input}
+
+\begin{enumerate}[resume]
+
+\item
+\textbf{[24 points for both sections]}
+\input{CS7643-Problem-Sets/question-bank/Coding/gradients_style-transfer}
+
+\end{enumerate}
+
+\end{document}

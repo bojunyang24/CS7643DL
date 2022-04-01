@@ -1,0 +1,139 @@
+\documentclass[11pt,english]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Package imports are stored in /assets/base-packages.tex
+% Packages specific to this pset can be imported here.
+
+\listfiles
+\input{assets/base-packages.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Shortcuts
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{assets/mysymbols}
+\input{assets/math_definition.tex}
+\renewcommand{\hide}[1]{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title / Author
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\title{CS4803-7643: Deep Learning\\
+Spring 2022 \\
+Problem Set 4}
+
+% NOTE: Any changes to instructor, TAs, or piazza link should be done in the file below
+\input{assets/instructor-and-TAs}
+\date{Due: Monday, April 4, 11:59pm}
+\maketitle
+
+
+
+\paragraph*{Instructions}
+\begin{enumerate}
+\item We will be using Gradescope to collect your assignments.  Please read the following instructions for submitting to Gradescope carefully!
+     \begin{itemize}
+          \item 
+                For the \textbf{HW4 Writeup} component on Gradescope, please upload one single PDF containing the answers to all the theory questions, the report for the coding problems and the jupyter notebook \texttt{Machine\_Translation.ipynb} consisting of tests for parts of the code implementation. The solution to each problem/subproblem must be on a separate page. When submitting to Gradescope, please make sure to mark the page(s) corresponding to each problem/sub-problem.  
+                Also, please make sure that your submission for the coding part only includes the files collected by the \texttt{collect\_submission} script, else the auto-grader will result in a zero, and we won't accept regrade requests for this scenario given the size of the class.
+                Likewise, the pages of the report must also be marked to their corresponding subproblems. 
+
+          \item
+               For the coding problem, please use the provided \texttt{collect\_submission.py} script and
+               upload the resulting file to the \textbf{HW4 Code} assignment on Gradescope. While we will
+               not be explicitly grading your code, you are still required to submit it. Please make sure
+               you have saved the most recent version of your code before running this
+               script.
+
+          \item
+               Note: This is a large class and Gradescope's assignment segmentation features are essential.
+               Failure to follow these instructions may result in parts of your assignment not being graded.
+               We will not entertain regrading requests for failure to follow instructions.
+
+
+               Please read \url{https://stats200.stanford.edu/gradescope_tips.pdf} for additional information on submitting to Gradescope.
+     \end{itemize}
+
+\item
+    \LaTeX'd  solutions are strongly encouraged (solution template
+     available on Canvas---Assignment 4 HW),
+     but scanned handwritten copies are acceptable.
+     Hard copies are \textbf{not} accepted.
+
+
+\item We generally encourage you to collaborate with other students.
+
+You may talk to a friend,
+discuss the questions and potential directions for solving them. However, you need to write
+your own solutions and code separately, and \emph{not} as a group activity.
+Please list the students you collaborated with. \\ \\
+
+\end{enumerate}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Body
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Collaborators [0.5 points]}
+
+\input{question-bank/Misc/collaborators}
+
+
+\section{Recurrent Neural Networks and Transformers}
+\begin{enumerate}[start]
+
+\item
+\textbf{[Vanilla RNN for parity function: 3 points]}
+\input{question-bank/RNNs/vanilla-RNN_parity}
+
+\item
+\textbf{[LSTM for parity function: 5 points]}
+\input{question-bank/RNNs/LSTM-parity}
+
+\item
+\textbf{[When to Stop in Beam Search: 5 points]}
+\input{question-bank/Misc/beam-search}
+
+\item
+\textbf{[Exploding Gradients: 5 points]}
+\input{question-bank/Theory/exploding-gradients}
+
+\item
+\textbf{[Transformer as GNN: 5 points; Extra credit for both 4803 and 7643]}
+\input{question-bank/RNNs/transformer-as-GNN}
+
+\end{enumerate}
+
+\section{Paper Review [Extra credit for 4803, regular credit for 7643]}
+
+% Point values for paper review defined in the question file
+\input{question-bank/Paper_Reviews/multimodal-explanations}
+
+\section{Coding: Machine Translation with Seq2Seq and Transformers}
+
+\textbf{[20 points]}
+\input{question-bank/Coding/image-captioning}
+
+Points breakdown:
+\begin{itemize}
+    \item HW4 Code
+    \begin{itemize}
+        \item Autograder [11 points]
+    \end{itemize}
+    \item HW4 Writeup
+    \begin{itemize}
+        \item Theory Answers [18 points for 4803/ 22 points for 7643]
+        \item Report PDF [9 points]
+        \begin{itemize}
+            \item Description and results for Seq2Seq [4 points]
+            \item Description and results for Transformer [5 points]
+        \end{itemize}
+        \item Jupyter Notebook as PDF
+    \end{itemize}
+\end{itemize}
+
+\end{document}

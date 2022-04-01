@@ -1,0 +1,12 @@
+Let us define a \emph{sequence parity function} as a function that takes in a sequence of binary inputs  
+and returns a sequence indicating the number of 1's in the input so far; specifically, if at time $t$ 
+the 1's in the input so far is odd it returns 1, and 0 if it is even. 
+For example, given input sequence $[0, 1, 0, 1, 1, 0]$, 
+the parity sequence is $[0, 1, 1, 0, 1, 1]$. 
+Let $x_t$ denote the input at time $t$ and $y_t$ be the boolean output of this parity function at time $t$. 
+
+Design a vanilla recurrent neural network to implement the parity function. 
+Your implementation should include the equations of your hidden units and 
+the details about activations with different input at $x_t$ (0 or 1). 
+
+Hint: Recall that we have implemented AND and OR functions in HW3, which may be useful here. 

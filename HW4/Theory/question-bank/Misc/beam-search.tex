@@ -1,0 +1,46 @@
+Beam Search is a widely-used technique for decoding the most likely sequence from sequence models. 
+But it is difficult to decide when to stop beam search to obtain optimality because hypotheses can finish in different steps. 
+In this question, we will develop a formal understanding of the stopping criteria in beam search. 
+
+Let $\vec{x}$ denote the input upon which we condition our sequence model. Let $\vecy$ denote the output sequence. 
+Let $\vecy_{<t}$ be a shorthand notation for the sub-sequence $(y_{0}, y_{1}, \ldots, y_{t-1})$. 
+We say that a sequence (or hypothesis as they are sometimes referred to in this literature) 
+\vecy is \emph{completed} ($\completed(\vecy) = true$), if its last token is \stopsym, \ie,
+\[
+\completed(\vecy) = true \leftrightarrow (\vecy_{|\vecy|} = \stopsym)
+\]
+in which case it will not be further expanded in beam search.
+
+With this notation, we can write down the maximum a-posteriori inference problem as: 
+\begin{align}
+	\vecy* = \argmax_{\vecy} & \quad \prod_{t\leq |\vecy|}^{} p(y_t | \vecx,\vecy_{<i}) \\ 
+	\st & \quad \completed(\vecy) = true
+\end{align}
+
+We use beam search to find the (approximate) best output $\vecy^*$
+At time $t$, let $B_{t-1}$ denote the beams so far. Thus, $B_{t-1}$ is a $b$-length list consisting of $\tuple{\vecy, s}$ pairs, 
+\ie, $B_{t-1} = \big( \, \tuple{\vecy^1, s^1}, \ldots, \tuple{\vecy^b, s^b} \, \big)$, where $\vecy^i$ is a $(t-1)$-length sequence (a beam) 
+and $s^i$ is its associated score (sum of log-conditional probabilities), \ie $s^i =  \sum_{j=1}^{t-1} \log p(y^i_j \mid \vecx, \vecy^i_{<j}) $. 
+
+Let $\circ$ denote a concatenation operation, \ie $\vecy \circ y_t$ represents a beam expansion where 
+$\vecy$ is concatenated with $y_t$. 
+Beam search can be then be formalized via a $\toptop^b$ operator that selects (quite literally) the top-$b$ scoring items 
+in an expanded list of beams:  
+\begin{align}
+	B_t\! &= \!\toptop^b  
+	\big\{\, \tuple{\vecy \circ y_t, \ s + \log p(y_t | \vecx, \vecy_{<t})} \mid \tuple{\vecy\!, s} \in B_{t-1} \, \big\}
+\end{align}
+
+Let $\bestuptot$ be the best completed hypothesis so far (up to step $t$), \ie
+\begin{align}
+    \bestuptot \quad \overset{\Delta}{\textbf{=}} \quad \max \Big\{ s \mid \tuple{\vecy,s} \in \cup_{j \leq t} B_t,  \completed(\vecy) = true \Big\}
+\end{align}
+
+Notice that if there no completed beam till time $t$, $\bestuptot$ is undefined/empty. 
+
+Now, for the proof.
+
+Assuming that $\bestuptot$ is defined at time $t$ and the current highest scoring beam in $B_t$ (\ie $\vecy^1$) scores worse than or equal to $\bestuptot$, \ie $s^1 \le \bestuptoi$, 
+prove that there is no need to run beam search out further. That is, 
+prove that the current best completed beam (corresponding to $\bestuptot$) is the overall highest-probability completed beam  
+and future steps will be no better.

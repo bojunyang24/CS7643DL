@@ -1,0 +1,14 @@
+Learning long-term dependencies in recurrent networks suffers from a particular numerical challenge -- 
+gradients propagated over many time-steps tend to either `vanish' (i.e. converge to 0, frequently) or `explode' (\i.e. diverge to infinity; rarely, but with more damage to the optimization). To study this problem in a simple setting, consider the following recurrence relation without any nonlinear activation function or input $x$:
+
+\begin{equation} \label{eq:simple_recurrence}
+h_{t} = W^\top h_{t-1}
+\end{equation}
+
+where $W$ is a weight sharing matrix for recurrent relation at any time $t$. Let $\lambda_1, ..., \lambda_n$ be the eigenvalues of the weight matrix $W \in \C^{n \times n}$. Its spectral radius $\rho(W)$ is defined as: 
+
+\begin{align}
+\rho(W) = \text{max}\{|\lambda_1|, ... ,|\lambda_n| \}
+\end{align}
+
+Assuming the initial hidden state is $h_0$, write the relation between $h_t$ and $h_0$ and explain the role of the eigenvalues of $W$ in determining the `vanishing' or `exploding' property as $t\gg0$.

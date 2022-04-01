@@ -1,0 +1,47 @@
+Consider a specific 2 hidden layer ReLU network with inputs $x \in \mathbb{R}$, 1 dimensional outputs, and
+2 neurons per hidden layer. This function is given by
+\begin{equation}
+    h(x) = W^{(3)}\max\{0, W^{(2)} \max\{0, W^{(1)} x + \vec{b}^{(1)}\} + b^{(2)}\} + b^{(3)}    
+\end{equation}
+
+with weights:
+\begin{align}
+W^{(1)} &= \begin{bmatrix}
+        1.5 \\
+        0.5 \\
+    \end{bmatrix} \\
+b^{(1)} &= \begin{bmatrix}
+        0 \\
+        1 \\
+        \end{bmatrix} \\
+W^{(2)} &= \begin{bmatrix}
+        1 & 2 \\
+        2 & 1 \\
+        \end{bmatrix} \\
+b^{(2)} &= \begin{bmatrix}
+        0 \\
+        1 \\
+        \end{bmatrix} \\
+W^{(3)} &= \begin{bmatrix}
+        1 & 1 \\
+        \end{bmatrix} \\
+b^{(3)} &= -1
+\end{align}
+
+An interesting property of networks with piece-wise linear activations like the ReLU
+is that on the whole they compute piece-wise linear functions.
+At each of the following points $x=x_o$,  determine the value of weight $W \in \mathbb{R}$ and bias $b \in \mathbb{R}$ such that $\frac{dh(x)}{dx}\rvert_{x=x_o} = W$ and $Wx_o + b = h(x_o)$.
+
+
+
+\begin{equation}
+    x_o = 2
+\end{equation}
+
+\begin{equation}
+    x_o = -1
+\end{equation}
+
+\begin{equation}
+    x_o = 1
+\end{equation}

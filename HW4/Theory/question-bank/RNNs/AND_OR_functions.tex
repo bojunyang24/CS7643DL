@@ -1,0 +1,38 @@
+Implement AND and OR for pairs of binary inputs using a single linear threshold neuron
+with weights $\vec{w} \in \mathbb{R}^2$, bias $b \in \mathbb{R}$, and $\vec{x} \in \{0, 1\}^2$:
+\beqn
+    f(\vec{x}) = 
+    \begin{cases}
+        1 & \text{if } \vec{w}^T \vec{x} + b \ge 0 \\
+        0 & \text{if } \vec{w}^T \vec{x} + b < 0 \\
+    \end{cases}
+    \label{eq:linear_threshold}
+\eeqn
+
+That is, find $\vec{w}_{\texttt{AND}}$ and $b_{\texttt{AND}}$ such that
+\begin{center}
+\begin{tabular}{|c|c|c|} 
+\hline
+$x_1$ & $x_2$ & $f_{\texttt{AND}}(\vec{x})$ \\ 
+\hline
+0 & 0 & 0 \\
+0 & 1 & 0 \\
+1 & 0 & 0 \\
+1 & 1 & 1 \\
+\hline
+\end{tabular}
+\end{center}
+
+Also find $\vec{w}_{\texttt{OR}}$ and $b_{\texttt{OR}}$ such that
+\begin{center}
+\begin{tabular}{|c|c|c|} 
+\hline
+$x_1$ & $x_2$ & $f_{\texttt{OR}}(\vec{x})$ \\ 
+\hline
+0 & 0 & 0 \\
+0 & 1 & 1 \\
+1 & 0 & 1 \\
+1 & 1 & 1 \\
+\hline
+\end{tabular}
+\end{center}

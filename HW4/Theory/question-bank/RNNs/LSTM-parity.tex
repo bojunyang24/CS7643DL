@@ -1,0 +1,42 @@
+Let us recall different gates in an LSTM Network. First gate is the "forget gate layer":\\
+\begin{equation}
+    f_t = \sigma (W_f.[h_{t-1}, x_t] + b_f)
+\end{equation}
+where $f_t$ is the output of forget gate, $W_f$ is the weight matrix, $h_{t-1}$ is the hidden state of step \textit{t-1}, $x_t$ is the current input and $b_t$ is the bias value. \\
+Next we have "input gate layer":\\
+\begin{equation}
+    i_t = \sigma (W_i.[h_{t-1}, x_t] + b_i) \\
+\end{equation}
+\begin{equation}
+    \Tilde{C_{t}} = \tanh (W_C.[h_{t-1}, x_t] + b_C) 
+\end{equation} \\
+where $i_t$ decides which values we will update and $\Tilde{C_{t}}$ are the new candidate values that could be added to the cell state. Next we have new cell state candidate values:
+\begin{equation}
+    C_t = f_t * C_{t-1} + i_t * \Tilde{C_{t}} 
+    \label{eqn:xor}
+\end{equation}
+Finally, we have the output and hidden state
+\begin{equation}
+   o_t = \sigma (W_o .[h_{t-1}, x_t] + b_o) \\
+\end{equation}
+\begin{equation}
+    h_t = o_t * \tanh(C_t)
+\end{equation}
+
+Design an LSTM Network for the bit parity problem mentioned in Question 1. Specifically, provide values for $W_f$, $b_f$, $W_i$, $b_i$, $W_C$, $b_C$, $W_o$ and $b_o$ such that the cell state $C_t$ stores the parity of bit string. Please mention any assumptions you make. For this problem, you can assume below for Sigmoid and $\tanh$ function: \\
+\begin{equation}
+    \sigma(x) = \begin{dcases}
+    1,& \text{if } x > 0\\
+    0,              & \text{otherwise}
+\end{dcases}
+\end{equation}
+\begin{equation}
+    \tanh(x) = \begin{dcases}
+    1,& \text{if } x > 0\\
+    0,              & x = 0\\
+    -1,& \text{if } x < 0
+\end{dcases}
+\end{equation}
+
+
+Hint: Recall that XOR of x and y can be represented as ($x\land \bar{y}$) $\lor$ ($\bar{x} \land y$). Think about how you can leverage this information for equation \eqref{eqn:xor}.

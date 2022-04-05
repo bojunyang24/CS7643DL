@@ -45,8 +45,8 @@ class VanillaRNN(nn.Module):
                 hidden (tensor): the hidden value of previous time step of shape (batch_size, hidden_size)
 
             Returns:
-                output (FloatTensor): the output tensor of shape (output_size, batch_size)
-                hidden (FloatTensor): the hidden value of current time step of shape (hidden_size, batch_size)
+                output (FloatTensor): the output tensor of shape (batch_size, output_size)
+                hidden (FloatTensor): the hidden value of current time step of shape (batch_size, hidden_size)
         """
 
         output = None
@@ -57,7 +57,11 @@ class VanillaRNN(nn.Module):
         #   going over one time step. Please refer to the structure in the notebook.##
         #############################################################################
 
-
+        # batch_size, hidden_size = hidden.shape
+        hidden_mul = torch.matmul(hidden, self.W_hh)
+        x_mul = torch.matmul(x, self.W_xh)
+        hidden = torch.tanh(hidden_mul + x_mul + self.Bh)
+        output = torch.matmul(hidden, self.W_hy) + self.By
 
         #############################################################################
         #                              END OF YOUR CODE                             #

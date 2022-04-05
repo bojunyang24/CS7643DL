@@ -64,6 +64,33 @@ class LSTM(nn.Module):
         #   should initialize h_t and c_t to be zero vectors.                          #
         ################################################################################
         h_t, c_t = None, None
+        batch_size, sequence, features = x.shape
+        if init_states == None:
+            c_t = torch.zeros((batch_size, self.hidden_size))
+            h_t = torch.zeros_like(c_t)
+        else:
+            h_t, c_t = init_states
+        for i in range(sequence):
+            x_t = x[:,i,:]
+            i_t = nn.functional.sigmoid(
+                torch.matmul(x_t, self.W_ii) + self.b_ii + torch.matmul(h_t, self.W_hi) + self.b_hi
+            )
+            f_t = nn.functional.sigmoid(
+                torch.matmul(x_t, self.W_if) + self.b_if + torch.matmul(h_t, self.W_hf) + self.b_hf
+            )
+            g_t = nn.functional.tanh(
+                torch.matmul(x_t, self.W_ig) + self.b_ig + torch.matmul(h_t, self.W_hg) + self.b_hg
+            )
+            o_t = nn.functional.sigmoid(
+                torch.matmul(x_t, self.W_io) + self.b_io + torch.matmul(h_t, self.W_ho) + self.b_ho
+            )
+            c_t = f_t * c_t + i_t * g_t
+            h_t = o_t * nn.functional.tanh(c_t)
+            # c_t = torch.matmul(c_t, f_t) + torch.matmul(g_t, i_t)
+            # h_t = torch.matmul(o_t, nn.functional.tanh(c_t))
+            
+
+
 
         ################################################################################
         #                              END OF YOUR CODE                                #

@@ -54,7 +54,8 @@ class TransformerTranslator(nn.Module):
         # Initialize the word embeddings before the positional encodings.            #
         # Don’t worry about sine/cosine encodings- use positional encodings.         #
         ##############################################################################
-        
+        self.word_emb = nn.Embedding(input_size, self.hidden_dim)
+        self.position_emb = nn.Embedding(self.max_length, self.hidden_dim)
         ##############################################################################
         #                               END OF YOUR CODE                             #
         ##############################################################################
@@ -85,7 +86,10 @@ class TransformerTranslator(nn.Module):
         # Deliverable 3: Initialize what you need for the feed-forward layer.        # 
         # Don't forget the layer normalization.                                      #
         ##############################################################################
-        
+        self.ff1 = nn.Linear(self.hidden_dim, self.dim_feedforward)
+        self.relu = nn.ReLU()
+        self.ff2 = nn.Linear(self.dim_feedforward, self.hidden_dim)
+        self.norm_ff = nn.LayerNorm(self.hidden_dim)
         ##############################################################################
         #                               END OF YOUR CODE                             #
         ##############################################################################
@@ -95,7 +99,7 @@ class TransformerTranslator(nn.Module):
         # TODO:
         # Deliverable 4: Initialize what you need for the final layer (1-2 lines).   #
         ##############################################################################
-        
+        self.final = nn.Linear(self.hidden_dim, self.output_size)
         ##############################################################################
         #                               END OF YOUR CODE                             #
         ##############################################################################
@@ -118,7 +122,10 @@ class TransformerTranslator(nn.Module):
         # You should only be calling ClassificationTransformer class methods here.  #
         #############################################################################
         outputs = None
-        
+        embs = self.embed(inputs)
+        attention = self.multi_head_attention(embs)
+        feedforward = self.feedforward_layer(attention)
+        outputs = self.final_layer(feedforward)
         ##############################################################################
         #                               END OF YOUR CODE                             #
         ##############################################################################
@@ -137,7 +144,14 @@ class TransformerTranslator(nn.Module):
         # Note: word_to_ix has keys from 0 to self.vocab_size - 1                   #
         # This will take a few lines.                                               #
         #############################################################################
-      
+        inputs = inputs.to(self.device)
+        # embeddings = torch.add(
+        #     self.word_emb(inputs),
+        #     self.position_emb(
+        #         torch.arange(inputs.shape[1]).to(self.device)
+        #         )
+        #     ).to(self.device)
+        embeddings = self.word_emb(inputs) + self.position_emb(torch.arange(inputs.shape[1]).to(self.device))
         ##############################################################################
         #                               END OF YOUR CODE                             #
         ##############################################################################
@@ -159,6 +173,19 @@ class TransformerTranslator(nn.Module):
         # Use the provided 'Deliverable 2' layers initialized in the constructor.   #
         #############################################################################
         outputs = None
+        Q1 = self.q1(inputs)
+        K1 = self.k1(inputs)
+        V1 = self.v1(inputs)
+        head1 = self.softmax(Q1 @ K1.transpose(-2, -1) / np.sqrt(self.dim_k)) @ V1
+
+        Q2 = self.q2(inputs)
+        K2 = self.k2(inputs)
+        V2 = self.v2(inputs)
+        head2 = self.softmax(Q2 @ K2.transpose(-2, -1) / np.sqrt(self.dim_k)) @ V2
+
+        head = torch.cat((head1, head2), dim=2)
+        outputs = self.attention_head_projection(head)
+        outputs = self.norm_mh(inputs + outputs)
         
         ##############################################################################
         #                               END OF YOUR CODE                             #
@@ -180,7 +207,10 @@ class TransformerTranslator(nn.Module):
         # This should not take more than 3-5 lines of code.                         #
         #############################################################################
         outputs = None
-        
+        out = self.ff1(inputs)
+        out = self.relu(out)
+        out = self.ff2(out)
+        outputs = self.norm_ff(inputs + out)
         ##############################################################################
         #                               END OF YOUR CODE                             #
         ##############################################################################
@@ -199,7 +229,7 @@ class TransformerTranslator(nn.Module):
         # This should only take about 1 line of code.                               #
         #############################################################################
         outputs = None
-                
+        outputs = self.final(inputs)
         ##############################################################################
         #                               END OF YOUR CODE                             #
         ##############################################################################

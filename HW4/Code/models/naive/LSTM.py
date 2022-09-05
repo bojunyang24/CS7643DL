@@ -72,22 +72,22 @@ class LSTM(nn.Module):
             h_t, c_t = init_states
         for i in range(sequence):
             x_t = x[:,i,:]
-            i_t = nn.functional.sigmoid(
+            i_t = torch.sigmoid(
                 torch.matmul(x_t, self.W_ii) + self.b_ii + torch.matmul(h_t, self.W_hi) + self.b_hi
             )
-            f_t = nn.functional.sigmoid(
+            f_t = torch.sigmoid(
                 torch.matmul(x_t, self.W_if) + self.b_if + torch.matmul(h_t, self.W_hf) + self.b_hf
             )
-            g_t = nn.functional.tanh(
+            g_t = torch.tanh(
                 torch.matmul(x_t, self.W_ig) + self.b_ig + torch.matmul(h_t, self.W_hg) + self.b_hg
             )
-            o_t = nn.functional.sigmoid(
+            o_t = torch.sigmoid(
                 torch.matmul(x_t, self.W_io) + self.b_io + torch.matmul(h_t, self.W_ho) + self.b_ho
             )
             c_t = f_t * c_t + i_t * g_t
-            h_t = o_t * nn.functional.tanh(c_t)
+            h_t = o_t * torch.tanh(c_t)
             # c_t = torch.matmul(c_t, f_t) + torch.matmul(g_t, i_t)
-            # h_t = torch.matmul(o_t, nn.functional.tanh(c_t))
+            # h_t = torch.matmul(o_t, torch.tanh(c_t))
             
 
 

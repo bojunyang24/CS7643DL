@@ -22,7 +22,8 @@ class Seq2Seq(nn.Module):
         #    that the models are on the same device (CPU/GPU). This should take no  #
         #    more than 2 lines of code.                                             #
         #############################################################################
-
+        self.encoder = encoder.to(device)
+        self.decoder = decoder.to(device)
 
         #############################################################################
         #                              END OF YOUR CODE                             #
@@ -61,7 +62,25 @@ class Seq2Seq(nn.Module):
         #############################################################################
 
         outputs=None
+        outputs = torch.zeros((batch_size, out_seq_len, self.decoder.output_size)).to(self.device)
 
+        if self.encoder.model_type == "RNN":
+            output, hidden = self.encoder(source)
+        if self.encoder.model_type == "LSTM":
+            output, hidden = self.encoder(source)
+        # output = output.to(self.device)
+        # hidden = hidden.to(self.device)
+        
+        for i in range(1, out_seq_len):
+            if i == 1:
+                tokens = torch.unsqueeze(source[:,i-1], dim=1)
+            if self.decoder.model_type == "RNN":
+                output, hidden = self.decoder(tokens, hidden)
+            if self.decoder.model_type == "LSTM":
+                output, hidden = self.decoder(tokens, hidden)
+            outputs[:, i] = output
+            tokens = torch.unsqueeze(torch.argmax(output, dim=1), dim=1)
+            
         #############################################################################
         #                              END OF YOUR CODE                             #
         #############################################################################

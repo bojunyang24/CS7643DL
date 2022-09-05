@@ -30,7 +30,14 @@ class Decoder(nn.Module):
         #       4) A dropout layer                                                  #
         #############################################################################
 
-
+        self.emb = nn.Embedding(output_size, emb_size)
+        if self.model_type == 'RNN':
+            self.recurrent = nn.RNN(emb_size, decoder_hidden_size, batch_first=True)
+        if self.model_type == "LSTM":
+            self.recurrent = nn.LSTM(emb_size, decoder_hidden_size, batch_first=True)
+        self.linear = nn.Linear(decoder_hidden_size, output_size)
+        self.logsoftmax = nn.LogSoftmax(dim=-1)
+        self.drop = nn.Dropout(dropout)
 
         #############################################################################
         #                              END OF YOUR CODE                             #
@@ -51,7 +58,17 @@ class Decoder(nn.Module):
         # TODO: Implement the forward pass of the encoder.                          #
         #      Please apply the dropout to the embedding layer                      #
         #############################################################################
-
+        out = self.emb(input)
+        out = self.drop(out)
+        if self.model_type == "RNN":
+            output, hidden = self.recurrent(out, hidden)
+        if self.model_type == "LSTM":
+            output, hidden = self.recurrent(out, hidden)
+        # if self.model_type == "LSTM":
+        #     output, (hidden, c) = self.recurrent(out, (hidden, torch.zeros_like(hidden)))
+        output = self.linear(output)
+        output = self.logsoftmax(output)
+        output = output[:,0,:]
         #############################################################################
         #                              END OF YOUR CODE                             #
         #############################################################################

@@ -1,4 +1,5 @@
 import random
+from xml.sax.xmlreader import InputSource
 
 import torch
 import torch.nn as nn
@@ -32,7 +33,15 @@ class Encoder(nn.Module):
         #       4) A dropout layer
         #     Note: Use if (RNN) and elif (LSTM) for model_type during initialization #
         #############################################################################
-
+        self.emb = nn.Embedding(input_size, emb_size)
+        if self.model_type == 'RNN':
+            self.recurrent = nn.RNN(emb_size, encoder_hidden_size, batch_first=True)
+        if self.model_type == "LSTM":
+            self.recurrent = nn.LSTM(emb_size, encoder_hidden_size, batch_first=True)
+        self.linear1 = nn.Linear(encoder_hidden_size, encoder_hidden_size)
+        self.relu = nn.ReLU()
+        self.linear2 = nn.Linear(encoder_hidden_size, decoder_hidden_size)
+        self.drop = nn.Dropout(dropout)
 
         #############################################################################
         #                              END OF YOUR CODE                             #
@@ -57,6 +66,26 @@ class Encoder(nn.Module):
         #############################################################################
 
         output, hidden = None, None
+        out = self.emb(input)
+        out = self.drop(out)
+        if self.model_type == "RNN":
+            output, hidden = self.recurrent(out)
+            hidden = self.linear1(hidden)
+            hidden = self.relu(hidden)
+            hidden = self.linear2(hidden)
+            hidden = torch.tanh(hidden)
+        if self.model_type == "LSTM":
+            output, (hidden, c) = self.recurrent(out)
+            hidden = self.linear1(hidden)
+            hidden = self.relu(hidden)
+            hidden = self.linear2(hidden)
+            hidden = torch.tanh(hidden)
+            hidden = (hidden, c)
+        # hidden = self.linear1(hidden)
+        # hidden = self.relu(hidden)
+        # hidden = self.linear2(hidden)
+        # hidden = torch.tanh(hidden)
+        
 
         #############################################################################
         #                              END OF YOUR CODE                             #
